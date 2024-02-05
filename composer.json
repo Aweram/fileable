@@ -1,0 +1,27 @@
+{
+    "name": "aweram/fileable",
+    "description": "File management for laravel project",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vladimir Peshkov",
+            "email": "vladimirpeshkov5@gmail.com"
+        }
+    ],
+    "require": {
+        "laravel/framework": "^10.10"
+    },
+    "autoload": {
+        "pasr-4": {
+            "Aweram\\Fileable\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Aweram\\Fileable\\FileableServiceProvider"
+            ]
+        }
+    }
+}

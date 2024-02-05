@@ -2,4 +2,5 @@
 
 return [
     "customFileModel" => null,
+    "customImageIndexComponent" => null,
 ];

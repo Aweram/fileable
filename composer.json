@@ -13,7 +13,7 @@
         "laravel/framework": "^10.10"
     },
     "autoload": {
-        "pasr-4": {
+        "psr-4": {
             "Aweram\\Fileable\\": "src/"
         }
     },

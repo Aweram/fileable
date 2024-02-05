@@ -15,5 +15,10 @@ class FileableServiceProvider extends ServiceProvider
     {
         // Миграции.
         $this->loadMigrationsFrom(__DIR__ . "/database/migrations");
+
+        // Подключение конфигурации.
+        $this->mergeConfigFrom(
+            __DIR__ . "/config/fileable.php", "fileable"
+        );
     }
 }

@@ -3,6 +3,8 @@
 namespace Aweram\Fileable;
 
 use Aweram\Fileable\Livewire\ImageIndexWire;
+use Aweram\Fileable\Models\File;
+use Aweram\Fileable\Observers\FileObserver;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 
@@ -19,6 +21,11 @@ class FileableServiceProvider extends ServiceProvider
             "fa-images",
             $component ?? ImageIndexWire::class
         );
+
+        // Наблюдатели.
+        $modelClass = config("fileable.customFileModel") ?? File::class;
+        $observerClass = config("fileable.customFileObserver") ?? FileObserver::class;
+        $modelClass::observe($observerClass);
     }
 
     public function register(): void

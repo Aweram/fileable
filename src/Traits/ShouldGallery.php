@@ -2,7 +2,7 @@
 
 namespace Aweram\Fileable\Traits;
 
-use Aweram\Fileable\Models\FileModel;
+use Aweram\Fileable\Models\File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
@@ -21,7 +21,7 @@ trait ShouldGallery
      */
     public function getGalleryFileClassAttribute(): string
     {
-        return config("fileable.customFileModel") ?? FileModel::class;
+        return config("fileable.customFileModel") ?? File::class;
     }
 
     /**

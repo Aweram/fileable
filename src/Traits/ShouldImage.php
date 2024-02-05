@@ -2,7 +2,7 @@
 
 namespace Aweram\Fileable\Traits;
 
-use Aweram\Fileable\Models\FileModel;
+use Aweram\Fileable\Models\File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\UploadedFile;
@@ -28,7 +28,7 @@ trait ShouldImage
      */
     public function getImageFileClassAttribute(): string
     {
-        return config("fileable.customFileModel") ?? FileModel::class;
+        return config("fileable.customFileModel") ?? File::class;
     }
 
     /**

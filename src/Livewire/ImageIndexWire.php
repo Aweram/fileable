@@ -8,14 +8,16 @@ use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Livewire\Attributes\On;
 
 class ImageIndexWire extends Component
 {
     use WithPagination, WithFileUploads;
 
     public Model $model;
-    public TemporaryUploadedFile|null $image = null;
-    public string $name = "";
+    public array $images = [];
+    public array $forUpload = [];
+    public bool $uploadProcess = false;
 
     public string $sortBy = "name";
     public string $sortDirection = "asc";
@@ -50,15 +52,62 @@ class ImageIndexWire extends Component
         ];
     }
 
+    public function updatedImages(): void
+    {
+        $this->forUpload = [];
+        foreach ($this->images as $image) {
+            /**
+             * @var TemporaryUploadedFile $image
+             */
+            $clientOriginal = $image->getClientOriginalName();
+            $exploded = explode(".", $clientOriginal);
+            $this->forUpload[] = [
+                "image" => $image,
+                "name" => $exploded[0]
+            ];
+        }
+    }
+
     public function render(): View
     {
         return view("fa::livewire.admin.images");
+    }
+
+    public function startUploadImages(): void
+    {
+        $this->uploadProcess = true;
+        $this->dispatch("next-item")->self();
+    }
+
+    #[On('next-item')]
+    public function uploadImages(): void
+    {
+        $this->uploadProcess = true;
+        $total = count($this->forUpload);
+        if ($total <= 0) {
+            // TODO: message
+            $this->uploadProcess = false;
+            $this->reset("images");
+            return;
+        }
+        $item = array_shift($this->forUpload);
+        debugbar()->info($item);
+        sleep(1);
+        // TODO: save and make validation
+        $this->dispatch("next-item")->self();
     }
 
     public function clearSearch(): void
     {
         $this->reset("searchEmail", "searchName");
         $this->resetPage();
+    }
+
+    public function deleteImageItem(int $index): void
+    {
+        if (! empty($this->forUpload[$index])) {
+            array_splice($this->forUpload, $index, 1);
+        }
     }
 
     public function showCreate(): void
@@ -69,6 +118,12 @@ class ImageIndexWire extends Component
 
     public function store(): void
     {
+        if (! method_exists($this->model, "livewireGalleryImage")) {
+            session()->flash("error", "Gallery does not exist");
+            $this->closeData();
+            return;
+        }
+
         $this->validate();
         $this->model->livewireGalleryImage($this->image, $this->name);
 

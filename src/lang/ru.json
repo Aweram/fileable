@@ -9,5 +9,6 @@
     "Error while update": "Ошибка обновления",
     "Add image": "Добавить изображение",
     "Image": "Изображение",
-    "Image successfully added": "Изображение успешно добавлено"
+    "Image successfully added": "Изображение успешно добавлено",
+    "Gallery does not exist": "Галерея не существует"
 }

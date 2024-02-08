@@ -12,7 +12,7 @@ use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 trait ShouldGallery
 {
-    protected static function bootShouldGallery()
+    protected static function bootShouldGallery(): void
     {
         static::deleting(function (Model $model) {
             $model->clearImages();

@@ -37,5 +37,8 @@ class FileableServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__ . "/config/fileable.php", "fileable"
         );
+
+        // Подключение переводов.
+        $this->loadJsonTranslationsFrom(__DIR__ . "/lang");
     }
 }

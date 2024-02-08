@@ -2,8 +2,12 @@
     <div class="col w-full">
         <div class="card">
             <div class="card-body">
-                Hello
+                @include("fa::admin.includes.image-search")
+                <x-tt::notifications.error />
+                <x-tt::notifications.success />
             </div>
+
+            @include("fa::admin.includes.image-table-modals")
         </div>
     </div>
 </div>

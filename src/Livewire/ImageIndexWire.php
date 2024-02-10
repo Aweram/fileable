@@ -16,8 +16,11 @@ class ImageIndexWire extends Component
 
     public Model $model;
     public array $images = [];
+
     public array $forUpload = [];
     public bool $uploadProcess = false;
+    public TemporaryUploadedFile|null $image = null;
+    public string $name = "";
 
     public string $sortBy = "name";
     public string $sortDirection = "asc";
@@ -39,7 +42,7 @@ class ImageIndexWire extends Component
     public function rules(): array
     {
         return [
-            "name" => ["nullable", "string", "max:50"],
+            "name" => ["nullable", "string", "min:3", "max:50"],
             "image" => ["required", "image"]
         ];
     }
@@ -61,8 +64,14 @@ class ImageIndexWire extends Component
              */
             $clientOriginal = $image->getClientOriginalName();
             $exploded = explode(".", $clientOriginal);
+            try {
+                $previewUrl = $image->temporaryUrl();
+            } catch (\Exception $e) {
+                $previewUrl = null;
+            }
             $this->forUpload[] = [
                 "image" => $image,
+                "preview" => $previewUrl,
                 "name" => $exploded[0]
             ];
         }
@@ -71,6 +80,12 @@ class ImageIndexWire extends Component
     public function render(): View
     {
         return view("fa::livewire.admin.images");
+    }
+
+    public function clearSearch(): void
+    {
+        $this->reset("searchEmail", "searchName");
+        $this->resetPage();
     }
 
     public function startUploadImages(): void
@@ -82,63 +97,42 @@ class ImageIndexWire extends Component
     #[On('next-item')]
     public function uploadImages(): void
     {
+        if (! method_exists($this->model, "livewireGalleryImage")) {
+            session()->flash("error", "Gallery does not exist");
+            return;
+        }
+
         $this->uploadProcess = true;
         $total = count($this->forUpload);
         if ($total <= 0) {
-            // TODO: message
+            session()->flash("success", implode(", ", [
+                __("Image sequence successfully added"),
+            ]));
             $this->uploadProcess = false;
             $this->reset("images");
             return;
         }
-        $item = array_shift($this->forUpload);
-        debugbar()->info($item);
-        sleep(1);
-        // TODO: save and make validation
-        $this->dispatch("next-item")->self();
-    }
 
-    public function clearSearch(): void
-    {
-        $this->reset("searchEmail", "searchName");
-        $this->resetPage();
+        $item = $this->forUpload[0];
+        $this->image = $item["image"];
+        $this->name = $item["name"];
+
+        $this->uploadProcess = false;
+        $this->validate();
+        $this->uploadProcess = true;
+        array_shift($this->forUpload);
+        $this->model->livewireGalleryImage($this->image, $this->name);
+        $this->reset("name", "image");
+        $this->dispatch("next-item")->self();
     }
 
     public function deleteImageItem(int $index): void
     {
         if (! empty($this->forUpload[$index])) {
             array_splice($this->forUpload, $index, 1);
+            $this->reset("name", "image");
+            $this->resetValidation();
         }
-    }
-
-    public function showCreate(): void
-    {
-        $this->resetFields();
-        $this->displayData = true;
-    }
-
-    public function store(): void
-    {
-        if (! method_exists($this->model, "livewireGalleryImage")) {
-            session()->flash("error", "Gallery does not exist");
-            $this->closeData();
-            return;
-        }
-
-        $this->validate();
-        $this->model->livewireGalleryImage($this->image, $this->name);
-
-        session()->flash("success", implode(", ", [
-            __("Image successfully added"),
-        ]));
-
-        $this->closeData();
-        $this->resetPage();
-    }
-
-    public function closeData(): void
-    {
-        $this->resetFields();
-        $this->displayData = false;
     }
 
     private function resetFields(): void

@@ -1,14 +1,38 @@
 <div class="row">
     @foreach($forUpload as $key => $item)
+        @php
+            $imgError = $errors->has("image") && $key === 0;
+            $nameError = $errors->has("name") && $key === 0;
+        @endphp
         <div class="col w-1/3">
-            <img src="{{ $item['image']->temporaryUrl() }}" alt="preview" class="w-28 h-28 object-cover rounded">
-            <input class="form-control" type="text" wire:model="forUpload.{{ $key }}.name" @if ($uploadProcess) disabled @endif>
-            <button type="button" class="btn btn-outline-danger" wire:click.prevent="deleteImageItem({{ $key }})" @if ($uploadProcess) disabled @endif>Delete</button>
+            @if ($item["preview"])
+                <img src="{{ $item['preview'] }}" alt="preview"
+                     class="w-28 h-28 object-cover rounded border border-transparent {{ $imgError ? "border-danger" : "" }}">
+            @else
+                <div>No preview</div>
+            @endif
+            @if ($imgError) <x-tt::form.error name="image" /> @endif
+
+            <input class="form-control {{ $nameError ? "border-danger" : "" }}"
+                   type="text" aria-label="Name"
+                   wire:model="forUpload.{{ $key }}.name"
+                   @if ($uploadProcess) disabled @endif>
+            @if ($nameError) <x-tt::form.error name="name" />@endif
+
+            <button type="button" class="btn btn-outline-danger"
+                    wire:click.prevent="deleteImageItem({{ $key }})"
+                    @if ($uploadProcess) disabled @endif>
+                Delete
+            </button>
         </div>
     @endforeach
     @if (count($forUpload))
         <div class="col w-full">
-            <button type="button" class="btn" wire:click="startUploadImages" @if ($uploadProcess) disabled @endif wire:loading.attr="disabled">Load</button>
+            <button type="button" class="btn"
+                    wire:click="startUploadImages" wire:loading.attr="disabled"
+                    @if ($uploadProcess) disabled @endif>
+                Load
+            </button>
         </div>
     @endif
 </div>

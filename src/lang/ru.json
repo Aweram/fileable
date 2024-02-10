@@ -11,5 +11,6 @@
     "Image": "Изображение",
     "Image successfully added": "Изображение успешно добавлено",
     "Gallery does not exist": "Галерея не существует",
-    "Image sequence successfully added": "Последовательность изображений успешно добавлена"
+    "Image sequence successfully added": "Последовательность изображений успешно добавлена",
+    "Choose files" : "Выберите файлы"
 }

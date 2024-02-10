@@ -55,6 +55,11 @@ class ImageIndexWire extends Component
         ];
     }
 
+    /**
+     * Когда выбраны новые фалы.
+     *
+     * @return void
+     */
     public function updatedImages(): void
     {
         $this->forUpload = [];
@@ -88,12 +93,22 @@ class ImageIndexWire extends Component
         $this->resetPage();
     }
 
+    /**
+     * Начать загрузку файлов.
+     *
+     * @return void
+     */
     public function startUploadImages(): void
     {
         $this->uploadProcess = true;
         $this->dispatch("next-item")->self();
     }
 
+    /**
+     * Загрузка фалов по одному.
+     *
+     * @return void
+     */
     #[On('next-item')]
     public function uploadImages(): void
     {
@@ -101,7 +116,7 @@ class ImageIndexWire extends Component
             session()->flash("error", "Gallery does not exist");
             return;
         }
-
+        // Проверка на то, что еще остались файлы.
         $this->uploadProcess = true;
         $total = count($this->forUpload);
         if ($total <= 0) {
@@ -112,11 +127,11 @@ class ImageIndexWire extends Component
             $this->reset("images");
             return;
         }
-
+        // Получение файла и его имени.
         $item = $this->forUpload[0];
         $this->image = $item["image"];
         $this->name = $item["name"];
-
+        // Валидация и загрузка файла.
         $this->uploadProcess = false;
         $this->validate();
         $this->uploadProcess = true;
@@ -126,6 +141,11 @@ class ImageIndexWire extends Component
         $this->dispatch("next-item")->self();
     }
 
+    /**
+     * Удалить файл из последовательности.
+     * @param int $index
+     * @return void
+     */
     public function deleteImageItem(int $index): void
     {
         if (! empty($this->forUpload[$index])) {

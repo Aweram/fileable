@@ -5,8 +5,11 @@
     </div>
 
     <div>
-        <input type="file" name="images" required multiple aria-label="{{ __("Images") }}"
-               id="images" class="form-control {{ $errors->has("images") ? "border-danger" : "" }}"
+        <label for="images" class="btn btn-primary cursor-pointer" wire:loading.attr="disabled">
+            {{ __("Choose files") }}
+        </label>
+        <input type="file" name="images" multiple aria-label="{{ __("Images") }}"
+               id="images" class="form-control hidden"
                wire:loading.attr="disabled" wire:model.lazy="images">
     </div>
 </div>

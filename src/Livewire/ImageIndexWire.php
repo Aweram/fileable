@@ -4,6 +4,7 @@ namespace Aweram\Fileable\Livewire;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
@@ -84,12 +85,33 @@ class ImageIndexWire extends Component
 
     public function render(): View
     {
-        return view("fa::livewire.admin.images");
+        $query = $this->model->images();
+        /**
+         * @var Builder $query
+         */
+        if (! empty($this->searchName)) {
+            $value = trim($this->searchName);
+            $query->where("name", "like", "%$value%");
+        }
+        $query->orderBy($this->sortBy, $this->sortDirection);
+
+        return view("fa::livewire.admin.images", [
+            "gallery" => $query->paginate()
+        ]);
     }
 
     public function clearSearch(): void
     {
-        $this->reset("searchEmail", "searchName");
+        $this->reset("searchName");
+        $this->resetPage();
+    }
+
+    public function changeSort(string $name): void
+    {
+        if ($this->sortBy == $name) {
+            $this->sortDirection = $this->sortDirection == "asc" ? "desc" : "asc";
+        } else $this->sortDirection = "asc";
+        $this->sortBy = $name;
         $this->resetPage();
     }
 

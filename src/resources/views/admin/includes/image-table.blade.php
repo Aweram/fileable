@@ -13,9 +13,28 @@
         @foreach($gallery as $item)
             <tr>
                 <td>
-                    {{ $item->name }}
-                    <br>
                     {{ $item->storage }}
+                    <br>
+                    @if ($displayName && $imageId == $item->id)
+                        <div class="flex justify-start">
+                            <input type="text" class="form-control rounded-r-none border-r-0 @if ($errors->has('name')) border-danger @endif"
+                                   aria-label="File name"
+                                   wire:model="name">
+                            <button type="button" class="btn btn-outline-dark rounded-r-none rounded-l-none border-r-0"
+                                    wire:click="closeEditName">
+                                {{ __("Cancel") }}
+                            </button>
+                            <button type="button" class="btn btn-outline-primary rounded-l-none"
+                                    wire:click="updateName">
+                                {{ __("Update") }}
+                            </button>
+                        </div>
+                        <x-tt::form.error name="name" />
+                    @else
+                        <button type="button" wire:click="showEditName({{$item->id}}, '{{$item->name}}')">
+                            {{ $item->name }}
+                        </button>
+                    @endif
                 </td>
                 <td>
                     <div class="flex justify-center">

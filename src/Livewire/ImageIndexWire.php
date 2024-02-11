@@ -28,7 +28,7 @@ class ImageIndexWire extends Component
     public string $searchName = "";
 
     public bool $displayDelete = false;
-    public bool $displayData = false;
+    public bool $displayName = false;
     public int|null $imageId = null;
 
     protected function queryString(): array
@@ -201,6 +201,38 @@ class ImageIndexWire extends Component
         }
         $this->resetPage();
         $this->closeDelete();
+    }
+
+    public function showEditName(int $imageId, string $name): void
+    {
+        $this->imageId = $imageId;
+        $this->name = $name;
+        $this->displayName = true;
+    }
+
+    public function closeEditName(): void
+    {
+        $this->reset("imageId", "name");
+        $this->displayName = false;
+    }
+
+    public function updateName(): void
+    {
+        $this->validate([
+            "name" => ["required", "min:5", "max:50"]
+        ], [], [
+            "name" => __("Name")
+        ]);
+        try {
+            $image = $this->model->gallery_file_class::find($this->imageId);
+            $image->update([
+                "name" => $this->name,
+            ]);
+            session()->flash("success", __("Image name successfully updated"));
+        } catch (\Exception $ex) {
+            session()->flash("error", __("Error while update image name"));
+        }
+        $this->closeEditName();
     }
 
     private function resetFields(): void

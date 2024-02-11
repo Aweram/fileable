@@ -13,7 +13,10 @@
         @foreach($gallery as $item)
             <tr>
                 <td>
-                    {{ $item->storage }}
+                    <a href="{{ route("thumb-img", ["template" => "original", "filename" => $item->file_name]) }}" target="_blank">
+                        <img src="{{ route("thumb-img", ["template" => "gallery-preview", "filename" => $item->file_name]) }}"
+                             alt="{{ $item->name }}" class="rounded-lg">
+                    </a>
                     <br>
                     @if ($displayName && $imageId == $item->id)
                         <div class="flex justify-start">
@@ -31,7 +34,7 @@
                         </div>
                         <x-tt::form.error name="name" />
                     @else
-                        <button type="button" wire:click="showEditName({{$item->id}}, '{{$item->name}}')">
+                        <button type="button" class="underline" wire:click="showEditName({{$item->id}}, '{{$item->name}}')">
                             {{ $item->name }}
                         </button>
                     @endif

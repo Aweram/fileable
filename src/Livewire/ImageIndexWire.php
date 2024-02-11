@@ -2,6 +2,7 @@
 
 namespace Aweram\Fileable\Livewire;
 
+use Aweram\Fileable\Interfaces\ShouldGalleryInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
@@ -15,7 +16,7 @@ class ImageIndexWire extends Component
 {
     use WithPagination, WithFileUploads;
 
-    public Model $model;
+    public ShouldGalleryInterface $model;
     public array $images = [];
 
     public array $forUpload = [];

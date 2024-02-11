@@ -2,13 +2,14 @@
 
 namespace Aweram\Fileable\Models;
 
+use Aweram\Fileable\Interfaces\FileModelInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\Storage;
 
-class File extends Model
+class File extends Model implements FileModelInterface
 {
     use HasFactory;
 

@@ -18,7 +18,7 @@ trait ShouldImage
         });
     }
 
-    protected function getImageKey()
+    protected function getImageKey(): string
     {
         return ! empty($this->imageKey) ? $this->imageKey : "image_id";
     }

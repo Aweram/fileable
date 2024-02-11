@@ -2,6 +2,7 @@
 
 namespace Aweram\Fileable;
 
+use Aweram\Fileable\Helpers\ThumbnailActionsManager;
 use Aweram\Fileable\Livewire\ImageIndexWire;
 use Aweram\Fileable\Models\File;
 use Aweram\Fileable\Observers\FileObserver;
@@ -40,5 +41,13 @@ class FileableServiceProvider extends ServiceProvider
 
         // Подключение переводов.
         $this->loadJsonTranslationsFrom(__DIR__ . "/lang");
+
+        // Подключение routes
+        $this->loadRoutesFrom(__DIR__ . "/routes/thumb.php");
+
+        // Facades.
+        $this->app->singleton("thumbnail-actions", function () {
+            return new ThumbnailActionsManager;
+        });
     }
 }

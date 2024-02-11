@@ -18,5 +18,6 @@
     "Delete image": "Удалить изображение",
     "It will be impossible to restore the image!": "Будет невозможно восстановить изображение!",
     "Image name successfully updated": "Имя изображения успешно обновлено",
-    "Error while update image name": "Ошибка при обновлении имени изображения"
+    "Error while update image name": "Ошибка при обновлении имени изображения",
+    "Loaded": "Загружено"
 }

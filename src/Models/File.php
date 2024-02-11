@@ -3,6 +3,7 @@
 namespace Aweram\Fileable\Models;
 
 use Aweram\Fileable\Interfaces\FileModelInterface;
+use Aweram\TraitsHelpers\Traits\ShouldHumanDate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class File extends Model implements FileModelInterface
 {
-    use HasFactory;
+    use HasFactory, ShouldHumanDate;
 
     protected $fillable = [
         "path",
@@ -46,6 +47,31 @@ class File extends Model implements FileModelInterface
     public function getStorageAttribute(): string
     {
         return Storage::url($this->path);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSizeAttribute(): string
+    {
+        return Storage::size($this->path);
+    }
+
+    public function getHumanSizeAttribute(): string
+    {
+        $size = $this->size;
+        if ($size > 0) {
+            $size = (int) $size;
+            $base = log($size) / log(1024);
+            $suffixes = ["bytes", "KB", "MB", "GB", "TB"];
+
+            return implode(" ", [
+                round(pow(1024, $base - floor($base)), 2),
+                $suffixes[floor($base)]
+            ]);
+        } else {
+            return $size;
+        }
     }
 
     /**

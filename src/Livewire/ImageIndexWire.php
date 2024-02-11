@@ -96,7 +96,7 @@ class ImageIndexWire extends Component
         $query->orderBy($this->sortBy, $this->sortDirection);
 
         return view("fa::livewire.admin.images", [
-            "gallery" => $query->paginate()
+            "gallery" => $query->get()
         ]);
     }
 
@@ -175,6 +175,32 @@ class ImageIndexWire extends Component
             $this->reset("name", "image");
             $this->resetValidation();
         }
+    }
+
+    public function showDelete(int $imageId): void
+    {
+        $this->reset("imageId");
+        $this->imageId = $imageId;
+        $this->displayDelete = true;
+    }
+
+    public function closeDelete(): void
+    {
+        $this->displayDelete = false;
+        $this->reset("imageId");
+    }
+
+    public function confirmDelete(): void
+    {
+        try {
+            $image = $this->model->gallery_file_class::find($this->imageId);
+            $image->delete();
+            session()->flash("success", __("Image successfully deleted"));
+        } catch (\Exception $ex) {
+            session()->flash("error", __("Image not found"));
+        }
+        $this->resetPage();
+        $this->closeDelete();
     }
 
     private function resetFields(): void

@@ -10,7 +10,11 @@
     "Add image": "Добавить изображение",
     "Image": "Изображение",
     "Image successfully added": "Изображение успешно добавлено",
+    "Image successfully deleted": "Изображение успешно удалено",
+    "Image not found": "Изображение не найдено",
     "Gallery does not exist": "Галерея не существует",
     "Image sequence successfully added": "Последовательность изображений успешно добавлена",
-    "Choose files" : "Выберите файлы"
+    "Choose files" : "Выберите файлы",
+    "Delete image": "Удалить изображение",
+    "It will be impossible to restore the image!": "Будет невозможно восстановить изображение!"
 }

@@ -17,14 +17,16 @@
                     <br>
                     {{ $item->storage }}
                 </td>
-                <td>Actions</td>
+                <td>
+                    <div class="flex justify-center">
+                        <button type="button" class="btn btn-danger px-btn-x-ico"
+                                wire:loading.attr="disabled"
+                                wire:click="showDelete({{ $item->id }})">
+                            <x-tt::ico.trash />
+                        </button>
+                    </div>
+                </td>
             </tr>
         @endforeach
-    </x-slot>
-    <x-slot name="caption">
-        <div class="flex justify-between">
-            <div>{{ __("Total") }}: {{ $gallery->total() }}</div>
-            {{ $gallery->links("tt::pagination.live") }}
-        </div>
     </x-slot>
 </x-tt::table>

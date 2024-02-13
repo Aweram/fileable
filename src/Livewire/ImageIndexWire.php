@@ -101,7 +101,6 @@ class ImageIndexWire extends Component
     public function clearSearch(): void
     {
         $this->reset("searchName");
-        $this->resetPage();
     }
 
     public function changeSort(string $name): void
@@ -110,7 +109,6 @@ class ImageIndexWire extends Component
             $this->sortDirection = $this->sortDirection == "asc" ? "desc" : "asc";
         } else $this->sortDirection = "asc";
         $this->sortBy = $name;
-        $this->resetPage();
     }
 
     /**
@@ -197,7 +195,6 @@ class ImageIndexWire extends Component
         } catch (\Exception $ex) {
             session()->flash("error", __("Image not found"));
         }
-        $this->resetPage();
         $this->closeDelete();
     }
 

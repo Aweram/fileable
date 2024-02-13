@@ -1,11 +1,7 @@
 <x-tt::table>
     <x-slot name="head">
         <tr>
-            <x-tt::table.heading sortable
-                                 wire:click="changeSort('name')"
-                                 :direction="$sortBy == 'name' ? $sortDirection : null">
-                {{ __("File") }}
-            </x-tt::table.heading>
+            <x-tt::table.heading class="text-left">{{ __("File") }}</x-tt::table.heading>
             <x-tt::table.heading>{{ __("Actions") }}</x-tt::table.heading>
         </tr>
     </x-slot>

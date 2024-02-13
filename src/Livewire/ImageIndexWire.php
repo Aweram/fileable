@@ -9,12 +9,11 @@ use Illuminate\Database\Query\Builder;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
-use Livewire\WithPagination;
 use Livewire\Attributes\On;
 
 class ImageIndexWire extends Component
 {
-    use WithPagination, WithFileUploads;
+    use WithFileUploads;
 
     public ShouldGalleryInterface $model;
     public array $images = [];
@@ -35,8 +34,6 @@ class ImageIndexWire extends Component
     protected function queryString(): array
     {
         return [
-            "sortBy",
-            "sortDirection",
             "searchName" => ["as" => "name", "except" => ""],
         ];
     }
@@ -94,7 +91,7 @@ class ImageIndexWire extends Component
             $value = trim($this->searchName);
             $query->where("name", "like", "%$value%");
         }
-        $query->orderBy($this->sortBy, $this->sortDirection);
+        $query->orderBy("priority", "asc");
 
         return view("fa::livewire.admin.images", [
             "gallery" => $query->get()

@@ -87,14 +87,17 @@ class ImageIndexWire extends Component
         /**
          * @var Builder $query
          */
+        $hasSearch = false;
         if (! empty($this->searchName)) {
+            $hasSearch = true;
             $value = trim($this->searchName);
             $query->where("name", "like", "%$value%");
         }
         $query->orderBy("priority", "asc");
 
         return view("fa::livewire.admin.images", [
-            "gallery" => $query->get()
+            "gallery" => $query->get(),
+            "hasSearch" => $hasSearch
         ]);
     }
 

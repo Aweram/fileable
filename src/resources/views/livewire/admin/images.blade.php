@@ -21,7 +21,9 @@
             el.counter = 0
 
             el.addEventListener('dragstart', e => {
-                el.counter = 0
+                root.querySelectorAll("[drag-gallery-item]").forEach(innerEl => {
+                    innerEl.counter = 0
+                })
                 e.target.setAttribute('dragging', true)
             })
 
@@ -31,8 +33,12 @@
                 })
 
                 let draggingEl = root.querySelector('[dragging]')
-                // TODO: Добавить условие, если элемент был выше, то заменить на after
-                e.target.closest('[drag-gallery-item]').before(draggingEl)
+                let chosenEl = e.target.closest('[drag-gallery-item]')
+
+                if (draggingEl.getAttribute('drag-galley-item-order') > chosenEl.getAttribute('drag-galley-item-order'))
+                    e.target.closest('[drag-gallery-item]').before(draggingEl)
+                else
+                    e.target.closest('[drag-gallery-item]').after(draggingEl)
 
                 let component = Livewire.find(
                     e.target.closest('[wire\\:id]').getAttribute('wire:id')
@@ -40,8 +46,8 @@
 
                 let orderIds = Array.from(root.querySelectorAll('[drag-gallery-item]'))
                     .map(itemEl => itemEl.getAttribute('drag-gallery-item'))
-                console.log(orderIds)
-                // component.call('$refresh')
+
+                component.call('reorderGallery', orderIds)
             })
 
             el.addEventListener('dragenter', e => {

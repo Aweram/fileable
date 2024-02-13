@@ -230,6 +230,20 @@ class ImageIndexWire extends Component
         $this->closeEditName();
     }
 
+    public function reorderGallery(array $newOrder): void
+    {
+        foreach ($newOrder as $priority => $id) {
+            try {
+                $file = $this->model->gallery_file_class::find($id);
+                $file->priority = $priority;
+                $file->save();
+            } catch (\Exception $ex) {
+                continue;
+            }
+        }
+        // TODO: Fire change image order event
+    }
+
     private function resetFields(): void
     {
         $this->reset(["name", "imageId", "image"]);

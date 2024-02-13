@@ -1,4 +1,4 @@
-<x-tt::table>
+<x-tt::table drag-gallery-root>
     <x-slot name="head">
         <tr>
             <x-tt::table.heading class="text-left">{{ __("File") }}</x-tt::table.heading>
@@ -7,7 +7,8 @@
     </x-slot>
     <x-slot name="body">
         @foreach($gallery as $item)
-            <tr>
+            <tr draggable="true" drag-gallery-item="{{ $item->id }}"
+                wire:key="{{ $item->id }}">
                 <td>
                     <div class="flex">
                         <a href="{{ route("thumb-img", ["template" => "original", "filename" => $item->file_name]) }}"

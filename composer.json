@@ -12,8 +12,8 @@
     "require": {
         "laravel/framework": "^10.10",
         "intervention/image": "^3.3",
-        "aweram/tailwindcss-theme": "@dev",
-        "aweram/traits-helpers": "@dev"
+        "aweram/tailwindcss-theme": "^1.0",
+        "aweram/traits-helpers": "^1.0"
     },
     "autoload": {
         "psr-4": {

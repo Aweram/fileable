@@ -2,6 +2,7 @@
 
 namespace Aweram\Fileable;
 
+use Aweram\Fileable\Commands\ThumbnailClearCommand;
 use Aweram\Fileable\Helpers\ThumbnailActionsManager;
 use Aweram\Fileable\Livewire\ImageIndexWire;
 use Aweram\Fileable\Models\File;
@@ -49,5 +50,12 @@ class FileableServiceProvider extends ServiceProvider
         $this->app->singleton("thumbnail-actions", function () {
             return new ThumbnailActionsManager;
         });
+
+        // Commands.
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                ThumbnailClearCommand::class
+            ]);
+        }
     }
 }

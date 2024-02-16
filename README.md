@@ -20,8 +20,6 @@
 
     php artisan migrate
 
-Файлы хранить в `public` или во внешнем хранилище:
-- В конфиге изменить `FILESYSTEM_DISK=public`
-
+Файлы хранить в `public` или во внешнем хранилище: В конфиге изменить `FILESYSTEM_DISK=public`
     
     php artisan storage:link

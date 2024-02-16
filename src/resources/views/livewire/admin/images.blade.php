@@ -18,6 +18,16 @@
         <script type="application/javascript">
             let root = document.querySelector("[drag-gallery-root]")
 
+            root.querySelectorAll("[drag-gallery-grab]").forEach(el => {
+                el.addEventListener("mouseover", e => {
+                    e.target.closest('[drag-gallery-item]').setAttribute("draggable", true)
+                })
+
+                el.addEventListener("mouseleave", e => {
+                    e.target.closest('[drag-gallery-item]').removeAttribute("draggable")
+                })
+            })
+
             root.querySelectorAll("[drag-gallery-item]").forEach(el => {
                 el.counter = 0
 

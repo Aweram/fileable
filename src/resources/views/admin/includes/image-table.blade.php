@@ -7,8 +7,7 @@
     </x-slot>
     <x-slot name="body">
         @foreach($gallery as $key => $item)
-            <tr @if (!$hasSearch) draggable="true" @endif
-                drag-gallery-item="{{ $item->id }}"
+            <tr drag-gallery-item="{{ $item->id }}"
                 drag-galley-item-order="{{ $key }}"
                 wire:key="{{ $item->id }}">
                 <td>
@@ -54,7 +53,7 @@
                             <x-tt::ico.trash />
                         </button>
                         @if (!$hasSearch)
-                            <div class="btn btn-outline-dark cursor-move ml-indent-half">
+                            <div drag-gallery-grab class="btn btn-outline-dark cursor-move ml-indent-half">
                                 Drag
                             </div>
                         @endif

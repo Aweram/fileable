@@ -10,10 +10,10 @@
         }
     ],
     "require": {
-        "laravel/framework": "^10.10",
+        "laravel/framework": "^11.0",
         "intervention/image": "^3.3",
-        "aweram/tailwindcss-theme": "^1.0",
-        "aweram/traits-helpers": "^1.0"
+        "aweram/tailwindcss-theme": "^2.0",
+        "aweram/traits-helpers": "^2.0"
     },
     "autoload": {
         "psr-4": {

@@ -1,6 +1,9 @@
 <div class="row">
     <div class="col w-full">
         <div class="card">
+            <div class="card-header">
+                <h2 class="font-medium text-2xl">{{ __("Gallery") }}</h2>
+            </div>
             <div class="card-body">
                 @include("fa::admin.includes.image-search")
                 @include("fa::admin.includes.images-preview")

@@ -1,4 +1,4 @@
-<x-tt::table drag-gallery-root>
+<x-tt::table :attributes="new \Illuminate\View\ComponentAttributeBag(['drag-gallery-root' . $postfix => true])">
     <x-slot name="head">
         <tr>
             <x-tt::table.heading class="text-left">{{ __("File") }}</x-tt::table.heading>

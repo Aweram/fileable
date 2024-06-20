@@ -16,4 +16,6 @@
     </div>
 </div>
 
-@include("fa::admin.includes.gallery-draggable-script")
+@if ($addScript)
+    @include("fa::admin.includes.gallery-draggable-script")
+@endif

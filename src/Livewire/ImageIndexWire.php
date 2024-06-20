@@ -17,6 +17,7 @@ class ImageIndexWire extends Component
 
     public ShouldGalleryInterface $model;
     public string $postfix = "";
+    public bool $addScript = true;
     public array $images = [];
 
     public array $forUpload = [];

@@ -16,6 +16,7 @@ class ImageIndexWire extends Component
     use WithFileUploads;
 
     public ShouldGalleryInterface $model;
+    public string $postfix = "";
     public array $images = [];
 
     public array $forUpload = [];

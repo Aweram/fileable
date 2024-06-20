@@ -5,10 +5,10 @@
     </div>
 
     <div>
-        <label for="images" class="btn btn-primary cursor-pointer w-full sm:w-auto" wire:loading.attr="disabled">
+        <label for="images{{ $postfix }}" class="btn btn-primary cursor-pointer w-full sm:w-auto" wire:loading.attr="disabled">
             {{ __("Choose files") }}
         </label>
-        <input type="file" name="images" multiple aria-label="{{ __("Images") }}"
+        <input type="file" name="images{{ $postfix }}" multiple aria-label="{{ __("Images") }}"
                id="images" class="form-control hidden"
                wire:loading.attr="disabled" wire:model.lazy="images">
     </div>

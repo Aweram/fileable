@@ -136,14 +136,14 @@ class ImageIndexWire extends Component
     public function uploadImages(): void
     {
         if (! method_exists($this->model, "livewireGalleryImage")) {
-            session()->flash("error", "Gallery does not exist");
+            session()->flash("gallery-error", "Gallery does not exist");
             return;
         }
         // Проверка на то, что еще остались файлы.
         $this->uploadProcess = true;
         $total = count($this->forUpload);
         if ($total <= 0) {
-            session()->flash("success", implode(", ", [
+            session()->flash("gallery-success", implode(", ", [
                 __("Image sequence successfully added"),
             ]));
             $this->uploadProcess = false;
@@ -196,9 +196,9 @@ class ImageIndexWire extends Component
         try {
             $image = $this->model->gallery_file_class::find($this->imageId);
             $image->delete();
-            session()->flash("success", __("Image successfully deleted"));
+            session()->flash("gallery-success", __("Image successfully deleted"));
         } catch (\Exception $ex) {
-            session()->flash("error", __("Image not found"));
+            session()->flash("gallery-error", __("Image not found"));
         }
         $this->closeDelete();
     }
@@ -228,9 +228,9 @@ class ImageIndexWire extends Component
             $image->update([
                 "name" => $this->name,
             ]);
-            session()->flash("success", __("Image name successfully updated"));
+            session()->flash("gallery-success", __("Image name successfully updated"));
         } catch (\Exception $ex) {
-            session()->flash("error", __("Error while update image name"));
+            session()->flash("gallery-error", __("Error while update image name"));
         }
         $this->closeEditName();
     }

@@ -32,6 +32,7 @@ trait ShouldGallery
      */
     public function images(): MorphMany
     {
+        // TODO: check if image
         return $this->morphMany($this->gallery_file_class, "fileable");
     }
 

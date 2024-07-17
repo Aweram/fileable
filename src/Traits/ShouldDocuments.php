@@ -62,7 +62,7 @@ trait ShouldDocuments
         // Тип файла.
         $type = "document";
         $priority = $this->getDocumentsPriority();
-        $document = $this->gallery_file_class::create(compact("path", "name", "mime", "type", "priority"));
+        $document = $this->documents_file_class::create(compact("path", "name", "mime", "type", "priority"));
         $this->documents()->save($document);
     }
 

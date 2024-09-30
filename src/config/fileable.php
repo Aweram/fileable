@@ -11,6 +11,7 @@ return [
         "gallery-preview" => \Aweram\Fileable\Templates\GalleyPreview::class,
         "small" => \Aweram\Fileable\Templates\Small::class,
         "medium" => \Aweram\Fileable\Templates\Medium::class,
-        "large" => \Aweram\Fileable\Templates\Large::class
+        "large" => \Aweram\Fileable\Templates\Large::class,
+        "col-4-square" => \Aweram\Fileable\Templates\Col4Square::class,
     ]
 ];

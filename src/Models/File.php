@@ -61,14 +61,7 @@ class File extends Model implements FileModelInterface
     {
         $size = $this->size;
         if ($size > 0) {
-            $size = (int) $size;
-            $base = log($size) / log(1024);
-            $suffixes = ["bytes", "KB", "MB", "GB", "TB"];
-
-            return implode(" ", [
-                round(pow(1024, $base - floor($base)), 2),
-                $suffixes[floor($base)]
-            ]);
+            return size2word($size);
         } else {
             return $size;
         }

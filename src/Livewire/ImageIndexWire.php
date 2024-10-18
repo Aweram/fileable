@@ -2,6 +2,9 @@
 
 namespace Aweram\Fileable\Livewire;
 
+use Aweram\Fileable\Events\DeleteImageEvent;
+use Aweram\Fileable\Events\ImageListChangedEvent;
+use Aweram\Fileable\Events\NewImageEvent;
 use Aweram\Fileable\Interfaces\ShouldGalleryInterface;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
@@ -162,6 +165,9 @@ class ImageIndexWire extends Component
         $this->model->livewireGalleryImage($this->image, $this->name);
         $this->reset("name", "image");
         $this->dispatch("next-item")->self();
+        // События на изменение изображений
+        NewImageEvent::dispatch($this->model);
+        $this->fireUpdateImages();
     }
 
     /**
@@ -197,6 +203,9 @@ class ImageIndexWire extends Component
             $image = $this->model->gallery_file_class::find($this->imageId);
             $image->delete();
             session()->flash("gallery-success", __("Image successfully deleted"));
+            // События обновления изображений
+            DeleteImageEvent::dispatch($this->model);
+            $this->fireUpdateImages();
         } catch (\Exception $ex) {
             session()->flash("gallery-error", __("Image not found"));
         }
@@ -246,12 +255,17 @@ class ImageIndexWire extends Component
                 continue;
             }
         }
-        // TODO: Fire change image order event
+        $this->fireUpdateImages();
     }
 
-    private function resetFields(): void
+    protected function resetFields(): void
     {
         $this->reset(["name", "imageId", "image"]);
+    }
+
+    protected function fireUpdateImages(): void
+    {
+        ImageListChangedEvent::dispatch($this->model);
     }
 }
 

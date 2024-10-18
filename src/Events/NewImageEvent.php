@@ -1,0 +1,21 @@
+<?php
+
+namespace Aweram\Fileable\Events;
+
+use Aweram\Fileable\Interfaces\ShouldGalleryInterface;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
+class NewImageEvent
+{
+    use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    /**
+     * Create a new event instance.
+     */
+    public function __construct(
+        public ShouldGalleryInterface $model
+    ) {}
+}
